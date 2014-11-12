@@ -16,14 +16,6 @@
    :post "POST"
    :delete "DELETE"})
 
-(defn edn-xhr [{:keys [method url data on-complete]}]
-  (let [xhr (XhrIo.)]
-    (events/listen xhr goog.net.EventType.COMPLETE
-      (fn [e]
-        (on-complete (reader/read-string (.getResponseText xhr)))))
-    (. xhr
-      (send url (meths method) (when data (pr-str data))
-        #js {"Content-Type" "application/edn"}))))
 
 
 (def app-state
@@ -34,6 +26,7 @@
   (if show
     #js {}
     #js {:display "none"}))
+
 
 (defn create-class [classes owner]
   (let [class-id-el   (om/get-node owner "class-id")
@@ -46,8 +39,7 @@
     (set! (.-value class-id-el) "")
     (set! (.-value class-name-el) "")))
 
-(defn handle-change [e data edit-key owner]
-  (om/transact! data edit-key (fn [_] (.. e -target -value))))
+
 
 (defn end-edit [data edit-key text owner cb]
   (om/set-state! owner :editing false)
@@ -55,6 +47,8 @@
   (when cb
     (cb text)))
 
+(defn handle-change [e data edit-key owner]
+  (om/transact! data edit-key (fn [_] (.. e -target -value))))
 
 (defn editable [data owner {:keys [edit-key] :as opts}]
   (reify
@@ -79,6 +73,7 @@
             #js {:style (display (not editing))
                  :onClick #(om/set-state! owner :editing true)}
             "Edit"))))))
+
 
 
 (defn classes-view [classes owner]

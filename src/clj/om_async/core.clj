@@ -16,6 +16,13 @@
    :headers {"Content-Type" "application/edn"}
    :body (pr-str data)})
 
+(defn get-classes [db]
+  (->> (d/q '[:find ?class
+              :where
+              [?class :class/id]]
+          db)
+       (map #(d/touch (d/entity db (first %))))
+       vec))
 
 (defn index []
   (file-response "public/html/index.html" {:root "resources"}))
@@ -43,7 +50,6 @@
     (d/transact conn [[:db/add eid :class/title title]])
     (generate-response {:status :ok})))
 
-
 (defroutes routes
   (GET "/" [] (index))
   (GET "/init" [] (init))
@@ -52,14 +58,6 @@
   (PUT "/classes" {params :edn-params} (update-class params))
   (route/files "/" {:root "resources/public"}))
 
-
-(defn get-classes [db]
-  (->> (d/q '[:find ?class
-              :where
-              [?class :class/id]]
-          db)
-       (map #(d/touch (d/entity db (first %))))
-       vec))
 
 (def app
   (-> routes
