@@ -1,9 +1,17 @@
 (set-env!
- :src-paths    #{"src"}
+ :src-paths    #{"src/clj" "src/cljs"}
  :rsc-paths    #{"html"}
  :dependencies '[[adzerk/boot-cljs      "0.0-2371-22" :scope "test"]
                  [adzerk/boot-cljs-repl "0.1.5"       :scope "test"]
-                 [adzerk/boot-reload    "0.1.3"       :scope "test"]])
+                 [adzerk/boot-reload    "0.1.3"       :scope "test"]
+                 ;[ring/ring "1.2.1"]
+                 [org.clojure/core.async "0.1.346.0-17112a-alpha"]
+                 [om "0.5.3"]
+                 [om-sync "0.1.1"]
+                 ;[compojure "1.1.6"]
+                 [fogus/ring-edn "0.2.0"]
+                 ;[com.datomic/datomic-free "0.9.4699"]
+                 ])
 
 (require
  '[adzerk.boot-cljs      :refer :all]
