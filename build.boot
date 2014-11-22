@@ -18,7 +18,7 @@
  '[boot.util             :as util]
  '[boot.core             :as core])
 
-(deftask serve
+(deftask serve-with-datomic
   "Start a web server on localhost and serve a directory.
 
    If no directory is specified the current one is used.  Listens on
