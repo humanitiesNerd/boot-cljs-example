@@ -29,7 +29,11 @@
   [d dir  PATH str "The directory to serve."
    p port PORT int "The port to listen on."]
   (let [worker (pod/make-pod {:dependencies '[[ring/ring-jetty-adapter "1.3.1"]
-                                              [compojure "1.2.1"]]})
+                                              [compojure "1.2.1"]
+                                              [fogus/ring-edn "0.2.0"]
+                                              [com.datomic/datomic-free "0.9.4699"]]
+                              :src-paths #{"src/clj"}}
+                             )
         dir    (or dir ".")
         port   (or port 3000)]
     (core/cleanup
@@ -39,6 +43,7 @@
       (pod/eval-in worker
         (require '[ring.adapter.jetty :refer [run-jetty]]
                  '[compojure.handler  :refer [site]]
-                 '[compojure.route    :refer [files]])
+                 '[compojure.route    :refer [files]]
+                 '[om-async.core :refer [app]])
         (def server (run-jetty (files "/" {:root ~dir}) {:port ~port :join? false})))
       (util/info "<< started web server on http://localhost:%d (serving: %s) >>\n" port dir))))
