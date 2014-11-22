@@ -45,5 +45,5 @@
                  '[compojure.handler  :refer [site]]
                  '[compojure.route    :refer [files]]
                  '[om-async.core :refer [app]])
-        (def server (run-jetty (files "/" {:root ~dir}) {:port ~port :join? false})))
+        (def server (run-jetty #'app {:port ~port :join? false})))
       (util/info "<< started web server on http://localhost:%d (serving: %s) >>\n" port dir))))
