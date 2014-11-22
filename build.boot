@@ -19,19 +19,17 @@
  '[boot.core             :as core])
 
 (deftask serve-with-datomic
-  "Start a web server on localhost and serve a directory.
+  "Start a web server on localhost and serve the app.
+   The web serve calls a datomic serice that should be running already.
 
-   If no directory is specified the current one is used.  Listens on
-   port 3000 by default."
-  [;d dir  PATH str "The directory to serve."
-   p port PORT int "The port to listen on."]
+   Listens on port 3000 by default."
+  [p port PORT int "The port to listen on."]
   (let [worker (pod/make-pod {:dependencies '[[ring/ring-jetty-adapter "1.3.1"]
                                               [compojure "1.2.1"]
                                               [fogus/ring-edn "0.2.0"]
                                               [com.datomic/datomic-free "0.9.4699"]]
                               :src-paths #{"src/clj"}}
                              )
-       ; dir    (or dir ".")
         port   (or port 3000)]
     (core/cleanup
      (util/info "<< stopping Jetty... >>")
