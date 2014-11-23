@@ -56,7 +56,8 @@
   (GET "/classes" [] (classes))
   (POST "/classes" {params :edn-params} (create-class params))
   (PUT "/classes" {params :edn-params} (update-class params))
-  (route/files "/" {:root "resources/public"}))
+  (route/files "/" {:root "target"})
+  )
 
 
 (def app

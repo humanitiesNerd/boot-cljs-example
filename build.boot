@@ -1,6 +1,6 @@
 (set-env!
  :src-paths    #{"src/cljs"}
- :rsc-paths    #{"resources/public"}
+ :rsc-paths    #{"resources/public" }
  :dependencies '[[adzerk/boot-cljs      "0.0-2371-25" :scope "test"]
                  [adzerk/boot-cljs-repl "0.1.6"       :scope "test"]
                  [adzerk/boot-reload    "0.1.6"       :scope "test"]
@@ -20,7 +20,7 @@
 
 (deftask serve-with-datomic
   "Start a web server on localhost and serve the app.
-   The web serve calls a datomic serice that should be running already.
+   The web server calls a datomic service that should be running already.
 
    Listens on port 3000 by default."
   [p port PORT int "The port to listen on."]
