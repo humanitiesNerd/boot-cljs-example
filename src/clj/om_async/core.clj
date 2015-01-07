@@ -56,12 +56,14 @@
   (GET "/classes" [] (classes))
   (POST "/classes" {params :edn-params} (create-class params))
   (PUT "/classes" {params :edn-params} (update-class params))
-  (route/files "/" {:root "resources/public"}))
+  (route/files "/" {:root "target"})
+  )
 
 
 (def app
   (-> routes
       wrap-edn-params))
 
-(defonce server
-  (run-jetty #'app {:port 8080 :join? false}))
+(comment
+  (defonce server
+    (run-jetty #'app {:port 8080 :join? false})))
