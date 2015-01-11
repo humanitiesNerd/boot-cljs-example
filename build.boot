@@ -8,6 +8,7 @@
                  [om "0.5.3"]
                  [om-sync "0.1.1"]
                  [fogus/ring-edn "0.2.0"]
+                 ;;[shodan "0.4.1"]
                  ])
 
 (require

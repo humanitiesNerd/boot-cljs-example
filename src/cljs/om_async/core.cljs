@@ -5,7 +5,11 @@
             [om.core :as om :include-macros true]
             [om.dom :as dom :include-macros true]
             [om-sync.core :refer [om-sync]]
-            [om-sync.util :refer [tx-tag edn-xhr]]))
+            [om-sync.util :refer [tx-tag edn-xhr]]
+            ;;[shodan.console :as console :include-macros true]
+            ;;[shodan.inspection :refer [inspect]]
+            )
+  )
 
 
 (enable-console-print!)
@@ -138,4 +142,6 @@
           :shared {:tx-chan tx-pub-chan}
           :tx-listen
           (fn [tx-data root-cursor]
+            ;;(inspect tx-data)
+            (js/console.log (pr-str tx-data))
             (put! tx-chan [tx-data root-cursor]))}))}))
